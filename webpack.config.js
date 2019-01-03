@@ -1,10 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-    template: path.join(__dirname, "/public/index.html"),
-    filename: "./index.html"
-});
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
@@ -22,7 +17,8 @@ module.exports = env => {
   return {
     entry: ["babel-polyfill", "./src/app.js"],
     output: {
-      path: path.join(__dirname, "public", "dist"),
+      path: __dirname + '/dist',
+      publicPath: '/',
       filename: "bundle.js"
     },
     module: {
@@ -54,8 +50,8 @@ module.exports = env => {
       ]
     },
     plugins: [
-      htmlWebpackPlugin,
       CSSExtract,
+      new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         "process.env.FIREBASE_API_KEY": JSON.stringify(
           process.env.FIREBASE_API_KEY
@@ -77,14 +73,11 @@ module.exports = env => {
         )
       })
     ],
-     resolve: {
-        extensions: [".js", ".jsx"]
-    },
     devtool: isProduction ? "source-map" : "inline-source-map",
     devServer: {
-      contentBase: path.join(__dirname, "public"),
-      historyApiFallback: true,
-      publicPath: "/dist/"
+      contentBase: './dist',
+      hot: true,
+      historyApiFallback: true
     }
   };
 };
