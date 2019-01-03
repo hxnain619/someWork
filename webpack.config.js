@@ -2,8 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  template: path.join(__dirname, "/public/index.html"),
-  filename: "./index.html"
+    template: path.join(__dirname, "/public/index.html"),
+    filename: "./index.html"
 });
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -77,8 +77,8 @@ module.exports = env => {
         )
       })
     ],
-    resolve: {
-      extensions: [".js", ".jsx"]
+     resolve: {
+        extensions: [".js", ".jsx"]
     },
     devtool: isProduction ? "source-map" : "inline-source-map",
     devServer: {
