@@ -17,14 +17,15 @@ module.exports = env => {
   return {
     entry: ["babel-polyfill", "./src/app.js"],
     output: {
-      path: path.join(__dirname, "public", "dist"),
+      path: __dirname + '/dist',
+      publicPath: '/',
       filename: "bundle.js"
     },
     module: {
       rules: [
         {
           loader: "babel-loader",
-          test: /\.js$/,
+          test: /\.(js|jsx)$/,
           exclude: /node_modules/
         },
         {
@@ -50,6 +51,7 @@ module.exports = env => {
     },
     plugins: [
       CSSExtract,
+      new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         "process.env.FIREBASE_API_KEY": JSON.stringify(
           process.env.FIREBASE_API_KEY
@@ -73,9 +75,9 @@ module.exports = env => {
     ],
     devtool: isProduction ? "source-map" : "inline-source-map",
     devServer: {
-      contentBase: path.join(__dirname, "public"),
-      historyApiFallback: true,
-      publicPath: "/dist/"
+      contentBase: './dist',
+      hot: true,
+      historyApiFallback: true
     }
   };
 };
