@@ -1,5 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const htmlWebpackPlugin = new HtmlWebpackPlugin({
+    template: path.join(__dirname, "/public/index.html"),
+    filename: "./index.html"
+});
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
@@ -49,6 +54,7 @@ module.exports = env => {
       ]
     },
     plugins: [
+      htmlWebpackPlugin,
       CSSExtract,
       new webpack.DefinePlugin({
         "process.env.FIREBASE_API_KEY": JSON.stringify(
