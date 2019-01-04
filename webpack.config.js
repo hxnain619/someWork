@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "test") {
 
 module.exports = env => {
   const isProduction = env === "production";
-  const CSSExtract = new ExtractTextPlugin("styles.css");
+  const CSSExtract = new ExtractTextPlugin("/styles/stylesheet/styles.css");
 
   return {
     entry: ["babel-polyfill", "./src/app.js"],
@@ -45,6 +45,12 @@ module.exports = env => {
                 }
               },
               {
+                loader: "resolve-url-loader", 
+                  options: {
+                  sourceMap: true
+                }
+              },
+              {
                 loader: "sass-loader",
                 options: {
                   sourceMap: true
@@ -52,6 +58,10 @@ module.exports = env => {
               }
             ]
           })
+        },
+          {
+            test: /\.(jpe?g|png|gif|svg)$/i, 
+            loader: "file-loader?name=/images/[name].[ext]"
         }
       ]
     },
