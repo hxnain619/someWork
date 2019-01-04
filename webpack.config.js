@@ -37,6 +37,7 @@ module.exports = env => {
         {
           test: /\.s?css$/,
           use: CSSExtract.extract({
+            publicPath: '.',
             use: [
               {
                 loader: "css-loader",
